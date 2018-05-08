@@ -1,8 +1,3 @@
-# flutter_social_app
 
-A new Flutter project.
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+Trying to implement 
+https://dribbble.com/shots/3898209-iPhone-X-Social-App
