@@ -17,17 +17,6 @@ class _ProfileWidgetState extends State<ProfileWidget>
     super.initState();
   }
 
-  // @override
-  // init(double bottomBarHeight) {
-  //   animationController = AnimationController(
-  //       duration: Duration(milliseconds: 5000), vsync: this);
-
-  //   animation = Tween(begin: 100.0, end: 700.0).animate(animationController)
-  //     ..addListener(() {
-  //       setState(() {});
-  //     });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return new Expanded(

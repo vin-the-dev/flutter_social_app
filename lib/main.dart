@@ -31,9 +31,10 @@ class _HomePageState extends State<HomePage>
   AnimationController animationController;
   bool profileEnlarged;
 
+  double animPercentage = 0.0;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     profileEnlarged = false;
     animationController =
@@ -44,65 +45,103 @@ class _HomePageState extends State<HomePage>
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-
-    animation = Tween(begin: 0, end: 1).animate(animationController)
+    animation = Tween(begin: 0.0, end: 100.0).animate(animationController)
       ..addListener(() {
         setState(() {});
       });
+
+    animPercentage = 0.0;
+  }
+
+  double getHeightForBottomBar() {
+    double curPer = ((0.8 - 0.3) / 100 * animPercentage) + 0.3;
+    double h = MediaQuery.of(context).size.height;
+    return h * curPer;
+  }
+
+  double getZoomFactor() {
+    double curPer = ((1.1 - 1) / 100 * (100 - animPercentage)) + 1;
+
+    return curPer;
+  }
+
+  void _handleDragUpdate(DragUpdateDetails details) {
+    print(details.delta);
+    print(details.globalPosition.dy);
+    double h = MediaQuery.of(context).size.height;
+    double startH = h * 0.3;
+    double endH = h * 0.8;
+    double curHeight = h - details.globalPosition.dy;
+    if (curHeight > endH) {
+      animPercentage = 100.0;
+    } else if (curHeight < startH) {
+      animPercentage = 0.0;
+    } else {
+      animPercentage = ((curHeight / h) - 0.3) * (100 / (0.8 - 0.3));
+    }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    double heightValue() {
-      double h = MediaQuery.of(context).size.height;
-      double curPer = (((0.75 - 0.30) / 100 * animation.value) + 0.30);
-      double h2 = curPer * h;
-      return h2;
-    }
+    // double heightValue() {
+    //   double h = MediaQuery.of(context).size.height;
+    //   double curPer = (((0.75 - 0.30) / 100 * animation.value) + 0.30);
+    //   double h2 = curPer * h;
+    //   return h2;
+    // }
 
     return new Scaffold(
         body: new Container(
       child: new Stack(
         children: <Widget>[
-          new ImagePageWidget(),
+          new Transform(
+              transform: new Matrix4.translationValues(0.0, 0.0, 0.0)
+                ..scale(getZoomFactor()),
+              alignment: Alignment.topCenter,
+              child: ImagePageWidget()),
           new Positioned(
             bottom: 0.0,
             left: 0.0,
             right: 0.0,
-            child: Container(
-              height: heightValue(),
-              decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.center,
-                      colors: [Colors.transparent, Colors.black])),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  HeaderBottomBarWidget(),
-                  new Expanded(
-                    child: MaterialButton(
-                      padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                      onPressed: () {
-                        if (profileEnlarged) {
-                          animationController.reverse();
-                          profileEnlarged = false;
-                        } else {
-                          animationController.forward();
-                          profileEnlarged = true;
-                        }
-                      },
-                      child: new Container(
-                          decoration: new BoxDecoration(
-                              borderRadius: new BorderRadius.only(
-                                  topLeft: Radius.circular(30.0),
-                                  topRight: new Radius.circular(30.0)),
-                              color: Colors.grey[300])),
+            child: new GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onVerticalDragUpdate: _handleDragUpdate,
+              child: new Container(
+                height: getHeightForBottomBar(),
+                decoration: new BoxDecoration(
+                    gradient: new LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.center,
+                        colors: [Colors.transparent, Colors.black])),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10.0,
                     ),
-                  )
-                ],
+                    HeaderBottomBarWidget(),
+                    new Expanded(
+                      child: MaterialButton(
+                        padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                        onPressed: () {
+                          // if (profileEnlarged) {
+                          //   animationController.reverse();
+                          //   profileEnlarged = false;
+                          // } else {
+                          //   animationController.forward();
+                          //   profileEnlarged = true;
+                          // }
+                        },
+                        child: new Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: new BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: new Radius.circular(30.0)),
+                                color: Colors.grey[300])),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )
