@@ -60,14 +60,12 @@ class _HomePageState extends State<HomePage>
   }
 
   double getZoomFactor() {
-    double curPer = ((1.1 - 1) / 100 * (100 - animPercentage)) + 1;
+    double curPer = ((1.4 - 1) / 100 * (100 - animPercentage)) + 1;
 
     return curPer;
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
-    print(details.delta);
-    print(details.globalPosition.dy);
     double h = MediaQuery.of(context).size.height;
     double startH = h * 0.3;
     double endH = h * 0.8;
@@ -84,12 +82,12 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    // double heightValue() {
-    //   double h = MediaQuery.of(context).size.height;
-    //   double curPer = (((0.75 - 0.30) / 100 * animation.value) + 0.30);
-    //   double h2 = curPer * h;
-    //   return h2;
-    // }
+    double heightValue() {
+      double h = MediaQuery.of(context).size.height;
+      double curPer = (((0.75 - 0.30) / 100 * animation.value) + 0.30);
+      double h2 = curPer * h;
+      return h2;
+    }
 
     return new Scaffold(
         body: new Container(
