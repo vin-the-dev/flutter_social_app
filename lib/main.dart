@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   double animPercentage = 0.0;
   var profileData = [];
   int pageIndex = 0;
+  var _bottomDataWidget = new BottomDataWidget();
 
   @override
   void initState() {
@@ -55,23 +56,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           numberofFollowers: 300,
           numberofLikes: 200,
           numberofPosts: 100,
-          strImagePath: 'assets/image1.jpg'),
+          strImagePath: 'assets/image1.jpg',
+          name: 'Angelica	Briggs'),
       ProfileEntity(
           numberofFollowers: 30,
           numberofLikes: 20,
           numberofPosts: 10,
-          strImagePath: 'assets/image2.jpg'),
+          strImagePath: 'assets/image2.jpg',
+          name: 'Lillian	Bates'),
       ProfileEntity(
           numberofFollowers: 3,
           numberofLikes: 2,
           numberofPosts: 1,
-          strImagePath: 'assets/image3.jpg')
+          strImagePath: 'assets/image3.jpg',
+          name: 'Mary	Allison')
     ];
   }
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     animation = Tween(begin: 0.0, end: 100.0).animate(animationController)
       ..addListener(() {
@@ -118,6 +121,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void animatePageChange(int pageIndex) {
+    // _bottomDataWidget.resetProfileData();
     opacityAnimationController.forward()
       ..whenCompleteOrCancel(() {
         this.pageIndex = pageIndex;
@@ -127,17 +131,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // double heightValue() {
-    //   double h = MediaQuery.of(context).size.height;
-    //   double curPer = (((0.75 - 0.30) / 100 * animation.value) + 0.30);
-    //   double h2 = curPer * h;
-    //   return h2;
-    // }
-
     return new Scaffold(
         body: new Container(
       child: new Stack(
-        children: <Widget>[ImagePageWidget(), BottomDataWidget()],
+        children: <Widget>[new ImagePageWidget(), _bottomDataWidget],
       ),
     ));
   }
@@ -149,12 +146,15 @@ class ProfileEntity {
   int numberofPosts;
   int numberofLikes;
   String name;
-  String location_country;
-  String location_city;
+  String locationCountry;
+  String locationCity;
 
   ProfileEntity(
       {this.strImagePath,
       this.numberofFollowers,
       this.numberofLikes,
-      this.numberofPosts});
+      this.numberofPosts,
+      this.locationCity,
+      this.locationCountry,
+      this.name});
 }
