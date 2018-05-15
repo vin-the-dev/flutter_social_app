@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'bottom_data_widget.dart';
 // import 'image_page_widget.dart';
-import 'header_bottom_bar_widget.dart';
+import 'bottom_data_widget.dart';
+import 'image_page_widget.dart';
 
 void main() => runApp(new MyApp());
 
@@ -20,11 +21,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
-_HomePageState _homePageState = new _HomePageState();
+_HomePageState homePageState = new _HomePageState();
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _homePageState;
+  _HomePageState createState() => homePageState;
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
@@ -32,20 +33,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   AnimationController animationController;
   Animation opacityAnimation;
   AnimationController opacityAnimationController;
-  bool _pageChanged;
   bool profileEnlarged;
 
   double animPercentage = 0.0;
+  var profileData = [];
+  int pageIndex = 0;
 
   @override
   void initState() {
-    _pageChanged = true;
     super.initState();
+    createMockData();
     profileEnlarged = false;
-    animationController =
-        AnimationController(duration: Duration(milliseconds: 250), vsync: this);
-    opacityAnimationController = AnimationController(
-        duration: Duration(milliseconds: 1000), vsync: this);
+    animationController = AnimationController(vsync: this);
+    opacityAnimationController =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+  }
+
+  void createMockData() {
+    profileData = [
+      ProfileEntity(
+          numberofFollowers: 300,
+          numberofLikes: 200,
+          numberofPosts: 100,
+          strImagePath: 'assets/image1.jpg'),
+      ProfileEntity(
+          numberofFollowers: 30,
+          numberofLikes: 20,
+          numberofPosts: 10,
+          strImagePath: 'assets/image2.jpg'),
+      ProfileEntity(
+          numberofFollowers: 3,
+          numberofLikes: 2,
+          numberofPosts: 1,
+          strImagePath: 'assets/image3.jpg')
+    ];
   }
 
   @override
@@ -81,7 +102,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return curPer;
   }
 
-  void _handleDragUpdate(DragUpdateDetails details) {
+  void handleDragUpdate(DragUpdateDetails details) {
     double h = MediaQuery.of(context).size.height;
     double startH = h * 0.3;
     double endH = h * 0.8;
@@ -96,28 +117,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  // void getVisibility() {
-  //   print("getVisibility: $_pageChanged");
-  //   // if (_pageChanged) {
-  //   // opacityAnimationController.reverse();
-  //   opacityAnimationController.repeat();
-  //   // opacityAnimationController.forward();
-  //   // } else {
-  //   // }
-  //   _pageChanged = !_pageChanged;
-  //   setState(() {});
-  // }
-
-  void animatePageChange() {
-    // print("getVisibility: $_pageChanged");
-    // if (_pageChanged) {
-    // opacityAnimationController.forward();
-    // opacityAnimationController.reverse();
-    opacityAnimationController.forward();
-    // } else {
-    // }
-    // _pageChanged = !_pageChanged;
-    // setState(() {});
+  void animatePageChange(int pageIndex) {
+    opacityAnimationController.forward()
+      ..whenCompleteOrCancel(() {
+        this.pageIndex = pageIndex;
+        opacityAnimationController.reverse();
+      });
   }
 
   @override
@@ -132,94 +137,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return new Scaffold(
         body: new Container(
       child: new Stack(
-        children: <Widget>[
-          ImagePageWidget(),
-          new Positioned(
-            bottom: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: new Container(
-              height: getHeightForBottomBar(),
-              decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.center,
-                      colors: [Colors.transparent, Colors.black])),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  new GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onVerticalDragUpdate: _handleDragUpdate,
-                    child: new Opacity(
-                        opacity: opacityAnimation.value,
-                        child: HeaderBottomBarWidget()),
-                  ),
-                  new Expanded(
-                    child: MaterialButton(
-                      padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                      onPressed: () {
-                        // if (profileEnlarged) {
-                        //   animationController.reverse();
-                        //   profileEnlarged = false;
-                        // } else {
-                        //   animationController.forward();
-                        //   profileEnlarged = true;
-                        // }
-                      },
-                      child: new Container(
-                          decoration: new BoxDecoration(
-                              borderRadius: new BorderRadius.only(
-                                  topLeft: Radius.circular(30.0),
-                                  topRight: new Radius.circular(30.0)),
-                              color: Colors.grey[300])),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+        children: <Widget>[ImagePageWidget(), BottomDataWidget()],
       ),
     ));
   }
 }
 
-class ImagePageWidget extends StatefulWidget {
-  @override
-  _ImagePageWidgetState createState() => new _ImagePageWidgetState();
-}
+class ProfileEntity {
+  String strImagePath;
+  int numberofFollowers;
+  int numberofPosts;
+  int numberofLikes;
+  String name;
+  String location_country;
+  String location_city;
 
-class _ImagePageWidgetState extends State<ImagePageWidget> {
-  Widget imageWidget(String asset) {
-    return Transform(
-      transform: new Matrix4.translationValues(0.0, 0.0, 0.0)
-        ..scale(_homePageState.getZoomFactor()),
-      alignment: Alignment.topCenter,
-      child: Image.asset(
-        asset,
-        width: MediaQuery.of(context).size.width,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      width: double.infinity,
-      child: PageView(
-        physics: AlwaysScrollableScrollPhysics(),
-        onPageChanged: (int pageIndex) {
-          _homePageState.animatePageChange();
-        },
-        children: <Widget>[
-          imageWidget('assets/image1.jpg'),
-          imageWidget('assets/image2.jpg'),
-        ],
-      ),
-    );
-  }
+  ProfileEntity(
+      {this.strImagePath,
+      this.numberofFollowers,
+      this.numberofLikes,
+      this.numberofPosts});
 }

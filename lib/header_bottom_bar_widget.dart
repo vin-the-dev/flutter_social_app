@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class HeaderBottomBarWidget extends StatelessWidget {
-  Widget obj(String count, String option) {
+  Widget textObjectList(String count, String option) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -16,15 +17,16 @@ class HeaderBottomBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var profile = homePageState.profileData[homePageState.pageIndex];
     return new Container(
       padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          obj('123', 'Followers'),
-          obj('265', 'Posts'),
-          obj('50', 'Following')
+          textObjectList(profile.numberofFollowers.toString(), 'Followers'),
+          textObjectList(profile.numberofPosts.toString(), 'Posts'),
+          textObjectList(profile.numberofLikes.toString(), 'Likes')
         ],
       ),
     );
