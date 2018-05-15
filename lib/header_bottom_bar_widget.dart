@@ -17,7 +17,7 @@ class HeaderBottomBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      padding: new EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 10.0),
+      padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
