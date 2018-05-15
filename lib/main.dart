@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   double animPercentage = 0.0;
   var profileData = [];
   int pageIndex = 0;
-  var _bottomDataWidget = new BottomDataWidget();
 
   @override
   void initState() {
@@ -134,7 +133,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return new Scaffold(
         body: new Container(
       child: new Stack(
-        children: <Widget>[new ImagePageWidget(), _bottomDataWidget],
+        children: <Widget>[new ImagePageWidget(), new BottomDataWidget()],
       ),
     ));
   }

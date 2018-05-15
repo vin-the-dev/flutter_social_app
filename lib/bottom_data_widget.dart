@@ -135,7 +135,7 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
           print('Follow button tapped');
           buttonAnimationController.forward()
             ..whenComplete(() {
-              // buttonAnimationController.reverse();
+              buttonAnimationController.reverse();
             });
         },
         child: new Container(
