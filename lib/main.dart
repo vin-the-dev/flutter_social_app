@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'image_page_widget.dart';
 import 'bottom_data_widget.dart';
 import 'image_page_widget.dart';
+import 'profile_section_widget.dart';
 
 void main() => runApp(new MyApp());
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   double animPercentage = 0.0;
   var profileData = [];
-  int pageIndex = 0;
+  int selectedPageIndex = 0;
 
   @override
   void initState() {
@@ -56,19 +57,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           numberofLikes: 200,
           numberofPosts: 100,
           strImagePath: 'assets/image1.jpg',
-          name: 'Angelica	Briggs'),
+          name: 'Angelica	Briggs',
+          isFollowing: false),
       ProfileEntity(
           numberofFollowers: 30,
           numberofLikes: 20,
           numberofPosts: 10,
           strImagePath: 'assets/image2.jpg',
-          name: 'Lillian	Bates'),
+          name: 'Lillian	Bates',
+          isFollowing: true),
       ProfileEntity(
           numberofFollowers: 3,
           numberofLikes: 2,
           numberofPosts: 1,
           strImagePath: 'assets/image3.jpg',
-          name: 'Mary	Allison')
+          name: 'Mary	Allison',
+          isFollowing: false)
     ];
   }
 
@@ -123,7 +127,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // _bottomDataWidget.resetProfileData();
     opacityAnimationController.forward()
       ..whenCompleteOrCancel(() {
-        this.pageIndex = pageIndex;
+        this.selectedPageIndex = pageIndex;
+        profileSectionState.resetProfileData();
+        followButtonWidgetState.resetFollowButton();
         opacityAnimationController.reverse();
       });
   }
@@ -147,6 +153,7 @@ class ProfileEntity {
   String name;
   String locationCountry;
   String locationCity;
+  bool isFollowing;
 
   ProfileEntity(
       {this.strImagePath,
@@ -155,5 +162,6 @@ class ProfileEntity {
       this.numberofPosts,
       this.locationCity,
       this.locationCountry,
-      this.name});
+      this.name,
+      this.isFollowing});
 }
