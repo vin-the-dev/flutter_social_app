@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'profile_inner_widget.dart';
 
 _ProfileSectionWidgetState profileSectionState =
     new _ProfileSectionWidgetState();
@@ -77,13 +78,17 @@ class _ProfileSectionWidgetState extends State<ProfileSectionWidget> {
                                     profile.name,
                                     style: new TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        letterSpacing: 1.5),
+                                        letterSpacing: 1.2),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   new Text(
-                                      '${profile.locationCountry}, ${profile.locationCity}')
-                                ], //Name and place
+                                    '${profile.locationCountry}, ${profile.locationCity}',
+                                    style: new TextStyle(
+                                        color:
+                                            Color.fromRGBO(124, 124, 124, 1.0)),
+                                  )
+                                ],
                               ),
                             )),
                             Container(
@@ -99,14 +104,7 @@ class _ProfileSectionWidgetState extends State<ProfileSectionWidget> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 80.0,
-                  // color: Colors.lightBlue,
-                ),
-                new Expanded(
-                    child: Container(
-                        // color: Colors.lightGreen,
-                        ))
+                new ProfileInnerWidget(),
               ],
             ),
           ),

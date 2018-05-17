@@ -47,9 +47,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     createMockData();
     profileEnlarged = false;
     animationController = AnimationController(
-        duration: new Duration(milliseconds: 1000), vsync: this);
+        duration: new Duration(milliseconds: 500), vsync: this);
     opacityAnimationController =
-        AnimationController(duration: Duration(milliseconds: 250), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 150), vsync: this);
   }
 
   void createMockData() {
@@ -62,7 +62,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           name: 'Angelica Briggs',
           isFollowing: false,
           locationCity: 'Prais',
-          locationCountry: 'France'),
+          locationCountry: 'France',
+          tagLine:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
       ProfileEntity(
           numberofFollowers: 30,
           numberofLikes: 20,
@@ -71,7 +73,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           name: 'Lillian Bates',
           isFollowing: true,
           locationCity: 'New York',
-          locationCountry: 'New York'),
+          locationCountry: 'New York',
+          tagLine: 'Tag Line'),
       ProfileEntity(
           numberofFollowers: 3,
           numberofLikes: 2,
@@ -80,7 +83,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           name: 'Mary Allison',
           isFollowing: false,
           locationCity: 'Hong Kong',
-          locationCountry: 'China'),
+          locationCountry: 'China',
+          tagLine: 'Tag Line'),
     ];
   }
 
@@ -167,6 +171,7 @@ class ProfileEntity {
   String locationCountry;
   String locationCity;
   bool isFollowing;
+  String tagLine;
 
   ProfileEntity(
       {this.strImagePath,
@@ -176,5 +181,6 @@ class ProfileEntity {
       this.locationCity,
       this.locationCountry,
       this.name,
-      this.isFollowing});
+      this.isFollowing,
+      this.tagLine});
 }
