@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     createMockData();
     profileEnlarged = false;
     animationController = AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
+        duration: new Duration(milliseconds: 350), vsync: this);
     opacityAnimationController =
         AnimationController(duration: Duration(milliseconds: 150), vsync: this);
   }
@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   double getHeightForBottomBar() {
-    double curPer = ((0.8 - 0.35) / 100 * animPercentage) + 0.35;
+    double curPer = ((0.7 - 0.30) / 100 * animPercentage) + 0.30;
     double h = MediaQuery.of(context).size.height;
     return h * curPer;
   }

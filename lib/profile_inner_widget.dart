@@ -12,7 +12,7 @@ class _ProfileInnerWidgetState extends State<ProfileInnerWidget> {
   Widget build(BuildContext context) {
     return Expanded(
         child: homePageState.animPercentage == 0
-            ? null
+            ? Container()
             : new Opacity(
                 opacity: homePageState.animPercentage / 100.0,
                 child: Container(

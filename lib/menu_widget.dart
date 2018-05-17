@@ -6,7 +6,7 @@ class MenuWidget extends StatelessWidget {
     return new Stack(
       children: <Widget>[
         new Positioned(
-          height: 100.0,
+          height: 60.0,
           bottom: 0.0,
           left: 0.0,
           right: 0.0,

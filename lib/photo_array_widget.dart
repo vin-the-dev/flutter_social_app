@@ -10,6 +10,7 @@ class _PhotoArrayWidgetState extends State<PhotoArrayWidget> {
   Widget build(BuildContext context) {
     return new Container(
       height: 120.0,
+      // color: Colors.red.shade100,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 5,
