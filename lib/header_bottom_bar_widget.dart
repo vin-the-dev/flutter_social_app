@@ -21,9 +21,9 @@ class HeaderBottomBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var profile = homePageState.profileData[homePageState.selectedPageIndex];
     return new Container(
-      padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+      padding: new EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 10.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           textObjectList(profile.numberofFollowers.toString(), 'followers',

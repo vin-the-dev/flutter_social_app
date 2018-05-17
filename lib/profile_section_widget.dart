@@ -16,10 +16,24 @@ class _ProfileSectionWidgetState extends State<ProfileSectionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var profile = homePageState.profileData[homePageState.selectedPageIndex];
     return new Expanded(
-      child: MaterialButton(
-        padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-        onPressed: () {},
+      child: InkWell(
+        // padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+        // onPressed: () {},
+        onTap: () {
+          if (homePageState.animPercentage == 100) {
+            homePageState.animationController.reverse()
+              ..whenComplete(() {
+                homePageState.profileEnlarged = true;
+              });
+          } else {
+            homePageState.animationController.forward()
+              ..whenComplete(() {
+                homePageState.profileEnlarged = true;
+              });
+          }
+        },
         child: new Container(
           decoration: new BoxDecoration(
               borderRadius: new BorderRadius.only(
@@ -31,34 +45,67 @@ class _ProfileSectionWidgetState extends State<ProfileSectionWidget> {
             child: new Column(
               children: <Widget>[
                 Container(
-                  height: 50.0,
-                  color: Colors.green,
+                  height: 60.0,
                   width: double.infinity,
-                  child: Row(
-                    children: <Widget>[
-                      new Expanded(
-                          child: Container(
-                        child: null, //Name and place
-                      )),
-                      Container(
-                        width: 150.0,
-                        // color: Colors.grey,
-                        padding: new EdgeInsets.all(10.0),
-                        child: Center(
-                          child: new FollowButtonWidget(),
+                  // color: Colors.red.shade100,
+                  child: new ClipRect(
+                    // padding: new EdgeInsets.all(0.0),
+                    // height: 10.0,
+                    // color: Colors.red.shade100,
+                    child: new Transform(
+                      transform: new Matrix4.translationValues(
+                          0.0,
+                          50.0 * (1 - homePageState.opacityAnimation.value),
+                          0.0),
+                      // ..scale(1.0, homePageState.opacityAnimation.value),
+                      alignment: Alignment.topCenter,
+                      child: new Opacity(
+                        opacity: homePageState.opacityAnimation.value,
+                        child: Row(
+                          children: <Widget>[
+                            new Expanded(
+                                child: new Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  10.0, 10.0, 0.0, 10.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  new Text(
+                                    profile.name,
+                                    style: new TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 1.5),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  new Text(
+                                      '${profile.locationCountry}, ${profile.locationCity}')
+                                ], //Name and place
+                              ),
+                            )),
+                            Container(
+                              width: 130.0,
+                              padding: new EdgeInsets.all(10.0),
+                              child: Center(
+                                child: new FollowButtonWidget(),
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
                 Container(
-                  height: 50.0,
-                  color: Colors.lightBlue,
+                  height: 80.0,
+                  // color: Colors.lightBlue,
                 ),
                 new Expanded(
                     child: Container(
-                  color: Colors.lightGreen,
-                ))
+                        // color: Colors.lightGreen,
+                        ))
               ],
             ),
           ),
@@ -81,14 +128,17 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
   Animation buttonAnimation;
   AnimationController buttonAnimationController;
 
+  final buttonMaxWidth = 130.0;
+  final buttonMinWidth = 40.0;
+
   void resetFollowButton() {
     var profile = homePageState.profileData[homePageState.selectedPageIndex];
 
     if (profile.isFollowing) {
       // print('isFollowing');
       buttonAnimation = new Tween(
-        begin: 40.0,
-        end: 120.0,
+        begin: buttonMinWidth,
+        end: buttonMaxWidth,
       ).animate(buttonAnimationController)
         ..addListener(() {
           setState(() {});
@@ -96,8 +146,8 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
     } else {
       // print('notFollowing');
       buttonAnimation = new Tween(
-        begin: 120.0,
-        end: 40.0,
+        begin: buttonMaxWidth,
+        end: buttonMinWidth,
       ).animate(buttonAnimationController)
         ..addListener(() {
           setState(() {});
@@ -120,8 +170,8 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
     super.didChangeDependencies();
 
     buttonAnimation = new Tween(
-      begin: 120.0,
-      end: 40.0,
+      begin: buttonMaxWidth,
+      end: buttonMinWidth,
     ).animate(buttonAnimationController)
       ..addListener(() {
         setState(() {});
@@ -134,10 +184,10 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
     // buttonAnimationController.reset();
     // print(profile.isFollowing);
 
-    return new Opacity(
-      opacity: homePageState.opacityAnimation.value,
+    return new Center(
       child: new Container(
-        width: 120.0,
+        width: buttonMaxWidth,
+        height: 30.0,
         alignment: Alignment.centerRight,
         child: new InkWell(
           onTap: () {
@@ -148,14 +198,16 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
           },
           child: new Container(
             width: buttonAnimation.value,
-            height: 60.0,
+            height: 50.0,
             alignment: FractionalOffset.center,
             decoration: new BoxDecoration(
               border: new Border.all(
                 color: borderColor,
                 width: 2.0,
               ),
-              color: buttonAnimation.value == 120 ? Colors.white : borderColor,
+              color: buttonAnimation.value == buttonMaxWidth
+                  ? Colors.transparent
+                  : borderColor,
               borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
             ),
             child: buttonAnimation.value > 75

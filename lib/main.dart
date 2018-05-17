@@ -45,9 +45,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     createMockData();
     profileEnlarged = false;
-    animationController = AnimationController(vsync: this);
+    animationController = AnimationController(
+        duration: new Duration(milliseconds: 1000), vsync: this);
     opacityAnimationController =
-        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 250), vsync: this);
   }
 
   void createMockData() {
@@ -57,22 +58,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           numberofLikes: 200,
           numberofPosts: 100,
           strImagePath: 'assets/image1.jpg',
-          name: 'Angelica	Briggs',
-          isFollowing: false),
+          name: 'Angelica Briggs',
+          isFollowing: false,
+          locationCity: 'Prais',
+          locationCountry: 'France'),
       ProfileEntity(
           numberofFollowers: 30,
           numberofLikes: 20,
           numberofPosts: 10,
           strImagePath: 'assets/image2.jpg',
-          name: 'Lillian	Bates',
-          isFollowing: true),
+          name: 'Lillian Bates',
+          isFollowing: true,
+          locationCity: 'New York',
+          locationCountry: 'New York'),
       ProfileEntity(
           numberofFollowers: 3,
           numberofLikes: 2,
           numberofPosts: 1,
           strImagePath: 'assets/image3.jpg',
-          name: 'Mary	Allison',
-          isFollowing: false)
+          name: 'Mary Allison',
+          isFollowing: false,
+          locationCity: 'Hong Kong',
+          locationCountry: 'China'),
     ];
   }
 
@@ -81,6 +88,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.didChangeDependencies();
     animation = Tween(begin: 0.0, end: 100.0).animate(animationController)
       ..addListener(() {
+        animPercentage = animation.value;
         setState(() {});
       });
     opacityAnimation =
@@ -93,7 +101,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   double getHeightForBottomBar() {
-    double curPer = ((0.8 - 0.3) / 100 * animPercentage) + 0.3;
+    double curPer = ((0.8 - 0.4) / 100 * animPercentage) + 0.4;
     double h = MediaQuery.of(context).size.height;
     return h * curPer;
   }

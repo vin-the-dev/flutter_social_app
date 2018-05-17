@@ -41,7 +41,7 @@ class _BottomDataWidgetState extends State<BottomDataWidget> {
             ),
             new GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onVerticalDragUpdate: homePageState.handleDragUpdate,
+              // onVerticalDragUpdate: homePageState.handleDragUpdate,
               child: new Opacity(
                   opacity: homePageState.opacityAnimation.value,
                   child: HeaderBottomBarWidget()),
