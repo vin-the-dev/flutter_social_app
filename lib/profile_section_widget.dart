@@ -41,13 +41,14 @@ class _ProfileSectionWidgetState extends State<ProfileSectionWidget> {
                   topRight: new Radius.circular(30.0)),
               color: new Color(0xF5F5F5FF)),
           child: new Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
             child: new Column(
               children: <Widget>[
                 Container(
-                  height: 60.0,
+                  height: 80.0,
                   width: double.infinity,
                   // color: Colors.red.shade100,
+                  padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                   child: new ClipRect(
                     // padding: new EdgeInsets.all(0.0),
                     // height: 10.0,

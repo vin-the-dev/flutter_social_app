@@ -21,10 +21,26 @@ class MenuWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Icon(Icons.note),
-                Icon(Icons.search),
-                Icon(Icons.add_box),
-                Icon(Icons.notifications),
-                Icon(Icons.chat)
+                Icon(
+                  Icons.search,
+                  color: Colors.red.shade600,
+                ),
+                new DecoratedBox(
+                  decoration: new BoxDecoration(boxShadow: [
+                    new BoxShadow(
+                        color: Colors.red.shade100,
+                        blurRadius: 50.0,
+                        spreadRadius: -1.0,
+                        offset: new Offset(0.0, 10.0))
+                  ]),
+                  child: Icon(
+                    Icons.add_circle,
+                    color: Colors.red,
+                    size: 50.0,
+                  ),
+                ),
+                Icon(Icons.notifications_none),
+                Icon(Icons.chat_bubble_outline)
               ],
             ),
           ),

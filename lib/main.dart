@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'bottom_data_widget.dart';
 import 'image_page_widget.dart';
 import 'profile_section_widget.dart';
+import 'menu_widget.dart';
 
 void main() => runApp(new MyApp());
 
@@ -101,7 +102,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   double getHeightForBottomBar() {
-    double curPer = ((0.8 - 0.4) / 100 * animPercentage) + 0.4;
+    double curPer = ((0.8 - 0.35) / 100 * animPercentage) + 0.35;
     double h = MediaQuery.of(context).size.height;
     return h * curPer;
   }
@@ -147,7 +148,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return new Scaffold(
         body: new Container(
       child: new Stack(
-        children: <Widget>[new ImagePageWidget(), new BottomDataWidget()],
+        children: <Widget>[
+          new ImagePageWidget(),
+          new BottomDataWidget(),
+          new MenuWidget()
+        ],
       ),
     ));
   }
