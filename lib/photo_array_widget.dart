@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class PhotoArrayWidget extends StatefulWidget {
   @override
@@ -18,9 +19,10 @@ class _PhotoArrayWidgetState extends State<PhotoArrayWidget> {
           return new Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
             child: new Image.asset(
-              'assets/image1.jpg',
+              homePageState.profileData[homePageState.selectedPageIndex].strImagePath,
               height: 150.0,
               width: 150.0,
+              fit: BoxFit.cover,
             ),
           );
         },
