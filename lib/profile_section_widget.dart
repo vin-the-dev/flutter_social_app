@@ -128,7 +128,7 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
   AnimationController buttonAnimationController;
 
   final buttonMaxWidth = 130.0;
-  final buttonMinWidth = 40.0;
+  final buttonMinWidth = 35.0;
 
   void resetFollowButton() {
     var profile = homePageState.profileData[homePageState.selectedPageIndex];
@@ -220,7 +220,7 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget>
                     ),
                   )
                 : new Icon(
-                    Icons.person,
+                    Icons.favorite_border,
                     color: Colors.white,
                   ),
           ),
